@@ -15,3 +15,15 @@ KOLOM_WAJIB = [
 ]
 
 KOLOM_ANGKA = [kolom for kolom in KOLOM_WAJIB if kolom != "Motivation_Level"]
+
+
+# --- DATASET ---
+
+
+# --- ANALISIS ---
+
+
+# --- FITUR UTAMA ---
+
+
+# --- MENU ---
