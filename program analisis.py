@@ -21,7 +21,77 @@ KOLOM_ANGKA = [kolom for kolom in KOLOM_WAJIB if kolom != "Motivation_Level"]
 
 
 # --- ANALISIS ---
+def kategori_nilai(nilai):
+    """Fungsi menentukan kategori hasil ujian."""
+    if nilai >= 85:
+        return "Tinggi"
+    elif nilai >= 70:
+        return "Sedang"
+    else:
+        return "Perlu Perhatian"
 
+
+def rata_rata(data, kolom):
+    """Fungsi menghitung rata-rata satu kolom."""
+    return sum(row[kolom] for row in data) / len(data)
+
+
+def ringkasan_data(data):
+    """Fungsi menampilkan ringkasan data seluruh siswa."""
+    ringkasan = [
+        ("Jumlah seluruh siswa", len(data)),
+        ("Rata-rata jam belajar", f"{rata_rata(data, 'Hours_Studied'):.2f} jam"),
+        ("Rata-rata kehadiran", f"{rata_rata(data, 'Attendance'):.2f} %"),
+        ("Rata-rata durasi tidur", f"{rata_rata(data, 'Sleep_Hours'):.2f} jam"),
+        ("Rata-rata nilai ujian", f"{rata_rata(data, 'Exam_Score'):.2f}")
+    ]
+
+    print("\n=== RINGKASAN DATA SISWA ===")
+    print("=" * 40)
+    print(f"{'Keterangan':<24} | {'Hasil':<11}")
+    print("-" * 40)
+    for nama, hasil in ringkasan:
+        print(f"{nama:<24} | {hasil}")
+    print("=" * 40)
+
+
+def cetak_kelompok(nama, daftar_nilai):
+    """Fungsi mencetak satu baris tabel kelompok durasi belajar."""
+    if len(daftar_nilai) > 0:
+        rata = round(sum(daftar_nilai) / len(daftar_nilai), 2)
+    else:
+        rata = "-"
+    print(f"{nama:<28} | {len(daftar_nilai):>12} | {rata:>15}")
+
+
+def analisis_belajar(data):
+    """Fungsi menganalisis nilai berdasarkan durasi belajar."""
+    rendah = [row["Exam_Score"] for row in data if row["Hours_Studied"] <= 2]
+    sedang = [row["Exam_Score"] for row in data if 2 < row["Hours_Studied"] <= 5]
+    tinggi = [row["Exam_Score"] for row in data if row["Hours_Studied"] > 5]
+
+    print("\n=== ANALISIS DURASI BELAJAR ===")
+    print("=" * 64)
+    print(f"{'Kelompok':<28} | {'Jumlah Siswa':>12} | {'Rata-rata Nilai':>15}")
+    print("-" * 64)
+    cetak_kelompok("Belajar rendah (<= 2 jam)", rendah)
+    cetak_kelompok("Belajar sedang (3-5 jam)", sedang)
+    cetak_kelompok("Belajar tinggi (> 5 jam)", tinggi)
+    print("=" * 64)
+
+
+def kelompok_nilai(data):
+    """Fungsi mengelompokkan siswa berdasarkan kategori hasil ujian."""
+    kategori = [row["Kategori"] for row in data]
+
+    print("\n=== PENGELOMPOKAN HASIL UJIAN ===")
+    print("=" * 40)
+    print(f"{'Kategori':<24} | {'Jumlah Siswa':>12}")
+    print("-" * 40)
+    print(f"{'Nilai tinggi (>= 85)':<24} | {kategori.count('Tinggi'):>12}")
+    print(f"{'Nilai sedang (70-84)':<24} | {kategori.count('Sedang'):>12}")
+    print(f"{'Perlu perhatian (< 70)':<24} | {kategori.count('Perlu Perhatian'):>12}")
+    print("=" * 40)
 
 # --- FITUR UTAMA ---
 def cetak_daftar(judul, daftar, kosong):
