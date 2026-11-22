@@ -240,3 +240,77 @@ def evaluasi_guru(data):
 
 
 # --- MENU ---
+def menu_siswa(data):
+    """Fungsi menampilkan hasil evaluasi untuk satu siswa."""
+    print("\n======== MENU SISWA ========")
+    print("Jumlah data siswa tersedia:", len(data))
+
+    try:
+        nomor = int(input("Masukkan nomor data siswa: "))
+    except ValueError:
+        print("[ERROR] Nomor data harus berupa angka!")
+        return
+
+    if nomor < 1 or nomor > len(data):
+        print("[ERROR] Nomor data tidak tersedia.")
+        return
+
+    tampilkan_rekap_siswa(nomor, data[nomor - 1])
+    rekomendasi_siswa(data[nomor - 1])
+
+
+def menu_guru(data):
+    """Fungsi menampilkan untuk menu guru."""
+    pilihan_menu = {
+        "1": ringkasan_data,
+        "2": analisis_belajar,
+        "3": kelompok_nilai,
+        "4": evaluasi_guru
+    }
+
+    while True:
+        print("\n ======= MENU GURU ========")
+        print("1. Ringkasan Data Siswa")
+        print("2. Analisis Durasi Belajar")
+        print("3. Pengelompokkan Hasil Ujian")
+        print("4. Evalluasi dan Rekomendasi")
+        print("5. Kembali")
+
+        pilihan = input("Pilihan menu: ")
+
+        if pilihan in pilihan_menu:
+            pilihan_menu[pilihan](data)
+        elif pilihan == "5":
+            break
+        else:
+            print("[ERROR] Pilihan tidak valid.")
+
+def main():
+    data = baca_data()
+
+    if len(data) == 0:
+        print("\nError: Dataset kosong atau tidak memiliki data yang valid.")
+        return
+
+    while True:
+        print("\n==============================")
+        print("PROGRAM ANALISIS KEBIASAN BELAJAR")
+        print("==============================")
+        print("1. Masuk Sebagai Siswa")
+        print("2. Masuk Sebagai Guru")
+        print("3. Keluar")
+
+        pilihan = input("Pilih pengguna: ")
+
+        if pilihan == "1":
+            menu_siswa(data)
+        elif pilihan == "2":
+            menu_guru(data)
+        elif pilihan == "3":
+            print("Program Selesai. Terima Kasih.")
+            break
+        else:
+            print("[ERROR] Pilihan tidak vaild.")
+
+if __name__ == "__main__":
+    main()
