@@ -1,7 +1,7 @@
 import csv
 import os
 
-FILE_CSV = r"c:\Users\USER\Downloads\StudentPerformanceFactors.csv"
+FILE_CSV = FILE_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "StudentPerformanceFactors.csv")
 
 KOLOM_WAJIB = [
     "Hours_Studied",
@@ -58,6 +58,7 @@ def baca_data():
 
             if len(data) == 300:
                 break
+        return data
 
 # --- ANALISIS ---
 def kategori_nilai(nilai):
@@ -250,11 +251,22 @@ def evaluasi_guru(data):
         print(f"{nama:<30} | {banyak:>6} | {banyak / jumlah * 100:>7.2f}%")
     print("=" * 54)
 
-    print("Nomor data siswa dengan nilai di bawah 70:")
-    if jumlah_rendah > 0:
-        print(", ".join(str(n) for n in nomor_rendah))
-    else:
-        print("Tidak ada")
+    print("\n=== 5 SISWA DENGAN NILAI TERENDAH ===")
+    print("=" * 26)
+    print(f"{'No. Data':<10} | {'Nilai Ujian':>11}")
+    print("-" * 26)
+  
+    sudah = []
+    for urutan in range(5):
+        nomor_min = 0
+        nilai_min = 1000
+        for nomor, row in enumerate(data, start=1):
+            if nomor not in sudah and row["Exam_Score"] < nilai_min:
+                nilai_min = row["Exam_Score"]
+                nomor_min = nomor
+        sudah.append(nomor_min)
+        print(f"{nomor_min:<10} | {nilai_min:>11}")
+    print("=" * 26)
 
     print("\n=== KESIMPULAN ===")
     print(f"Rata-rata nilai ujian siswa adalah {nilai:.2f} (kategori {kategori_nilai(nilai).lower()}), dengan {jumlah_rendah} dari {jumlah} siswa ({persentase:.2f}%) memperoleh nilai di bawah 70.")
