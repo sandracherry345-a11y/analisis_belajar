@@ -1,7 +1,7 @@
 import csv
 import os
 
-FILE_CSV = FILE_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "StudentPerformanceFactors.csv")
+FILE_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "StudentPerformanceFactors.csv")
 
 KOLOM_WAJIB = [
     "Hours_Studied",
