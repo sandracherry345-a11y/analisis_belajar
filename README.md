@@ -5,7 +5,7 @@ Program ini dibuat dengan bahasa Python untuk menganalisis hubungan antara kebia
 
 Program memiliki dua jenis pengguna:
 - Siswa, untuk melihat rekap dan saran perbaikan kebiasaan belajarnya sendiri.
-- Guru untuk memantau kondisi seluruh siswa dan mendapat rekomendasi pembelajaran.
+- Guru, untuk memantau kondisi seluruh siswa dan mendapat rekomendasi pembelajaran.
 
 ## Latar Belakang
 Banyak siswa bingung bagaimana mengubah kebiasaan belajar dan apa yang harus dilakukan agar nilai akademiknya lebih baik. Di sisi lain, guru kesulitan memantau kebiasaan belajar siswa satu per satu. Program ini dibuat untuk membantu keduanya dengan melihat data kebiasaan belajar dan hasil ujian secara terstruktur.
@@ -28,7 +28,7 @@ Siswa memasukkan nomor datanya, lalu program menampilkan:
 1. Ringkasan Data Siswa: jumlah siswa serta rata-rata jam belajar, kehadiran, durasi tidur, dan nilai ujian.
 2. Analisis Durasi Belajar: jumlah siswa dan rata-rata nilai pada kelompok belajar rendah, sedang, dan tinggi.
 3. Pengelompokan Hasil Ujian: jumlah siswa pada kategori nilai tinggi, sedang, dan perlu perhatian.
-4. Evaluasi dan Rekomendasi: kondisi siswa yang perlu diperhatikan, kesimpulan, dan rekomendasi untuk guru.
+4. Evaluasi dan Rekomendasi: tabel kondisi siswa yang perlu diperhatikan, 5 siswa dengan nilai ujian terendah, kesimpulan, dan rekomendasi untuk guru.
 
 ## Dataset
 Data diambil dari file `StudentPerformanceFactors.csv`. Program hanya membaca maksimal 300 data yang valid.
@@ -92,7 +92,7 @@ Rekomendasi muncul berdasarkan kondisi berikut:
 - `README.md`: dokumentasi proyek
 
 ## Anggota Kelompok
-- [Cherry Sandra]: [Fitur Utama]
-- [Liyana Maziya Fadhlani]: [Fitur Analisis]
-- [Belva Fitriyah Arzeti Putri]: [Fitur Menu]
-- [Asy Syifa Ramadhani Putri Indrianto]: [Fitur Dataset]
+1. Cherry Sandra: fitur utama
+2. Liyana Maziya Fadhlani: fitur analisis
+3. Belva Fitriyah Arzeti Putri: fitur menu
+4. Asy Syifa Ramadhani Putri Indrianto: fitur dataset
