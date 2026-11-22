@@ -18,7 +18,46 @@ KOLOM_ANGKA = [kolom for kolom in KOLOM_WAJIB if kolom != "Motivation_Level"]
 
 
 # --- DATASET ---
+def baca_data():
+    """Fungsi membaca dataset CSV dan memvalidasi setiap baris."""
+    data = []
 
+    if not os.path.exists(FILE_CSV):
+        print("Error: File CSV tidak ditemukan.")
+        print("Lokasi yang dicari:", FILE_CSV)
+        return data
+
+    with open(FILE_CSV, "r", newline="", encoding="utf-8-sig") as file:
+        reader = csv.DictReader(file)
+
+        if reader.fieldnames is None:
+            print("Error: Dataset tidak memiliki header.")
+            return data
+
+        kolom_hilang = [kolom for kolom in KOLOM_WAJIB if kolom not in reader.fieldnames]
+        if len(kolom_hilang) > 0:
+            print("Error: Kolom berikut tidak ditemukan:")
+            for kolom in kolom_hilang:
+                print(f"- {kolom}")
+            return data
+
+        for nomor_baris, row in enumerate(reader, start=2):
+            try:
+                for kolom in KOLOM_ANGKA:
+                    row[kolom] = int(row[kolom])
+            except (ValueError, TypeError):
+                print(f"Peringatan baris {nomor_baris}: salah satu nilai angka bukan bilangan bulat valid.")
+                continue
+
+            if any(row[kolom] < 0 for kolom in KOLOM_ANGKA):
+                print(f"Peringatan baris {nomor_baris}: nilai numerik tidak boleh bernilai negatif.")
+                continue
+
+            row["Kategori"] = kategori_nilai(row["Exam_Score"])
+            data.append(row)
+
+            if len(data) == 300:
+                break
 
 # --- ANALISIS ---
 
