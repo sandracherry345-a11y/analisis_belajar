@@ -80,11 +80,18 @@ Rekomendasi muncul berdasarkan kondisi berikut:
 4. Program menjalankan analisis atau evaluasi sesuai menu yang dipilih, lalu menampilkan hasilnya di terminal.
 
 ## Cara Menjalankan
+
 1. Pastikan Python sudah terpasang di komputer.
-2. Unduh `program analisis.py` dan `StudentPerformanceFactors.csv`.
-3. Buka `program analisis.py`, lalu ubah `FILE_CSV` (baris 4) sesuai lokasi file CSV di komputermu.
-4. Buka terminal di folder program, lalu jalankan perintah `python "program analisis.py"`.
-5. Pilih pengguna di menu utama: 1 untuk siswa, 2 untuk guru, 3 untuk keluar.
+2. Unduh file `program analisis.py` dan `StudentPerformanceFactors.csv`.
+3. Simpan kedua file tersebut dalam folder yang sama agar program dapat menemukan file CSV secara otomatis.
+4. Buka terminal pada folder tempat kedua file disimpan.
+5. Jalankan program menggunakan perintah berikut:
+   python "program analisis.py"
+
+6. Pilih pengguna pada menu utama:
+   - `1` untuk masuk sebagai siswa.
+   - `2` untuk masuk sebagai guru.
+   - `3` untuk keluar dari program.
 
 ## Struktur File
 - `program analisis.py`: kode program utama
