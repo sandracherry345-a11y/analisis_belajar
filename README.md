@@ -87,7 +87,6 @@ Rekomendasi muncul berdasarkan kondisi berikut:
 4. Buka terminal pada folder tempat kedua file disimpan.
 5. Jalankan program menggunakan perintah berikut:
    python "program analisis.py"
-
 6. Pilih pengguna pada menu utama:
    - `1` untuk masuk sebagai siswa.
    - `2` untuk masuk sebagai guru.
