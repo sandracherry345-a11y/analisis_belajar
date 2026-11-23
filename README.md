@@ -1,4 +1,4 @@
-# Program Analisis Hubungan Kebiasaan Belajar dengan Hasil Akademik Siswa SMA
+# Program Analisis Hubungan Kebiasaan Belajar dengan Hasil Akademik
 
 ## Deskripsi
 Program ini dibuat dengan bahasa Python untuk menganalisis hubungan antara kebiasaan belajar dan hasil akademik siswa SMA. Program membaca data siswa dari file CSV, memeriksa apakah datanya valid, lalu mengolahnya menjadi ringkasan, pengelompokan, evaluasi, dan rekomendasi.
