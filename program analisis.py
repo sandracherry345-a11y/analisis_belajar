@@ -16,6 +16,12 @@ KOLOM_WAJIB = [
 
 KOLOM_ANGKA = [kolom for kolom in KOLOM_WAJIB if kolom != "Motivation_Level"]
 
+ASPEK_UBAH= [("Jam belajar", "Hours_Studied", " jam"), ("Kehadiran", "Attendance", " %"),
+         ("Nilai sebelumnya", "Previous_Scores", ""), ("Durasi tidur", "Sleep_Hours", " jam"),
+         ("Sesi bimbingan", "Tutoring_Sessions", ""), ("Motivasi", "Motivation_Level", ""),
+         ("Aktivitas fisik", "Physical_Activity", ""), ("Nilai ujian", "Exam_Score", "")]
+
+BATAS_ATAS = {"Attendance": 100, "Previous_Scores": 100, "Exam_Score": 100, "Sleep_Hours": 24}
 
 # --- DATASET ---
 def baca_data():
@@ -54,11 +60,59 @@ def baca_data():
                 continue
 
             row["Kategori"] = kategori_nilai(row["Exam_Score"])
+            row["Baris_CSV"] = nomor_baris
             data.append(row)
 
             if len(data) == 300:
                 break
         return data
+
+def validasi_nilai_baru(kolom, nilai):
+    """Fungsi memvalidasi nilai baru sebelum disimpan. Mengembalikan True jika valid."""
+    pesan = ""
+    if kolom == "Motivation_Level":
+        if nilai.lower() not in ["low", "medium", "high"]:
+            pesan = "[ERROR] Motivasi harus Low, Medium, atau High!"
+    else:
+        try:
+            angka = int(nilai)
+            if angka < 0:
+                pesan = "[ERROR] Nilai tidak boleh negatif!"
+            elif kolom in BATAS_ATAS and angka > BATAS_ATAS[kolom]:
+                pesan = f"[ERROR] Nilai tidak boleh lebih dari {BATAS_ATAS[kolom]}!"
+        except ValueError:
+            pesan = "[ERROR] Nilai harus berupa bilangan bulat!"
+    if pesan != "":
+        print(pesan)
+        return False
+    return True
+
+
+def simpan_ke_csv(nomor_baris, kolom, nilai_baru):
+    """Fungsi mengubah satu nilai di file CSV tanpa menghapus data lainnya."""
+    file_sementara = FILE_CSV + ".tmp"
+    try:
+        with open(FILE_CSV, "rb") as file:
+            awal = file.read(4096)
+        akhir_baris = "\r\n" if b"\r\n" in awal else "\n"
+        sandi = "utf-8-sig" if awal.startswith(b"\xef\xbb\xbf") else "utf-8"
+        with open(FILE_CSV, "r", newline="", encoding="utf-8-sig") as file:
+            reader = csv.DictReader(file)
+            nama_kolom = reader.fieldnames
+            semua_baris = list(reader)
+        semua_baris[nomor_baris - 2][kolom] = nilai_baru
+        # tulis ke file sementara dulu, agar dataset asli tidak rusak jika gagal
+        with open(file_sementara, "w", newline="", encoding=sandi) as file:
+            writer = csv.DictWriter(file, fieldnames=nama_kolom, lineterminator=akhir_baris)
+            writer.writeheader()
+            writer.writerows(semua_baris)
+        os.replace(file_sementara, FILE_CSV)
+    except (OSError, IndexError, ValueError):
+        if os.path.exists(file_sementara):
+            os.remove(file_sementara)
+        print("[ERROR] Gagal menyimpan ke file CSV. Pastikan file tidak sedang dibuka di Excel.")
+        return False
+    return True
 
 # --- ANALISIS ---
 def kategori_nilai(nilai):
@@ -289,11 +343,56 @@ def evaluasi_guru(data):
     cetak_daftar("REKOMENDASI UNTUK GURU", rekomendasi,
                  "Kebiasaan belajar dan hasil akademik siswa sudah baik. Pertahankan proses pembelajaran dan lakukan pemantauan secara berkala.")
 
+def ubah_data_siswa(data):
+    """Fungsi mengubah satu aspek data siswa dan menyimpannya ke file CSV."""
+    print("\n========== UBAH DATA SISWA ==========")
+    print("Jumlah data siswa tersedia:", len(data))
+    try:
+        nomor = int(input("Masukkan nomor data siswa: "))
+    except ValueError:
+        print("[ERROR] Nomor data harus berupa angka!")
+        return
+    if nomor < 1 or nomor > len(data):
+        print("[ERROR] Nomor data tidak tersedia.")
+        return
+    siswa = data[nomor - 1]
+    print(f"\nData siswa nomor {nomor} saat ini:")
+    for urutan, (nama, kolom, satuan) in enumerate(ASPEK_UBAH, start=1):
+        print(f"{urutan}. {nama:<18}: {siswa[kolom]}")
+    try:
+        pilihan = int(input("Pilih aspek yang diubah: "))
+    except ValueError:
+        print("[ERROR] Pilihan harus berupa angka!")
+        return
+    if pilihan < 1 or pilihan > len(ASPEK_UBAH):
+        print("[ERROR] Pilihan aspek tidak tersedia.")
+        return
+    nama, kolom, satuan = ASPEK_UBAH[pilihan - 1]
+    nilai_baru = input(f"Masukkan {nama.lower()} baru: ").strip()
+    if not validasi_nilai_baru(kolom, nilai_baru):
+        print("[GAGAL] Proses dihentikan karena data input tidak valid.")
+        return
+    # samakan bentuk penulisan dengan isi dataset
+    if kolom == "Motivation_Level":
+        nilai_baru = nilai_baru.capitalize()
+    else:
+        nilai_baru = int(nilai_baru)
+    yakin = input(f"Ubah {nama.lower()} dari {siswa[kolom]} menjadi {nilai_baru}? (y/n): ").strip().lower()
+    if yakin != "y":
+        print("Perubahan dibatalkan.")
+        return
+    if not simpan_ke_csv(siswa["Baris_CSV"], kolom, str(nilai_baru)):
+        print("[GAGAL] Data tidak diubah.")
+        return
+    # perbarui data di program agar analisis langsung memakai nilai baru
+    siswa[kolom] = nilai_baru
+    siswa["Kategori"] = kategori_nilai(siswa["Exam_Score"])
+    print("[BERHASIL] Data berhasil diubah dan disimpan ke file CSV.")
 
 # --- MENU ---
-def menu_siswa(data):
+def evaluasi_siswa(data):
     """Fungsi menampilkan hasil evaluasi untuk satu siswa."""
-    print("\n======== MENU SISWA ========")
+    print("\n======== LIHAT HASIL EVALUASI ========")
     print("Jumlah data siswa tersedia:", len(data))
 
     try:
@@ -307,8 +406,26 @@ def menu_siswa(data):
         return
 
     tampilkan_rekap_siswa(nomor, data[nomor - 1])
-    rekomendasi_siswa(data[nomor - 1])
+    rekomendasi_siswa(data[nomor - 1]) 
 
+def menu_siswa(data):
+    """Fungsi menampilkan menu untuk siswa."""
+    while True:
+        print("\n======== MENU SISWA ========")
+        print("1. Lihat Hasil Evaluasi")
+        print("2. Ubah Data Kebiasaan")
+        print("3. Kembali")
+
+        pilihan = input("Pilihan menu: ")
+
+        if pilihan == "1":
+            evaluasi_siswa(data)
+        elif pilihan == "2":
+            ubah_data_siswa(data)
+        elif pilihan == "3":
+            break
+        else:
+            print("[ERROR] Pilihan tidak valid.")
 
 def menu_guru(data):
     """Fungsi menampilkan untuk menu guru."""
