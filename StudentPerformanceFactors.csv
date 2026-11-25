@@ -1,4 +1,4 @@
-Hours_Studied,Attendance,Parental_Involvement,Access_to_Resources,Extracurricular_Activities,Sleep_Hours,Previous_Scores,Motivation_Level,Internet_Access,Tutoring_Sessions,Family_Income,Teacher_Quality,School_Type,Peer_Influence,Physical_Activity,Learning_Disabilities,Parental_Education_Level,Distance_from_Home,Gender,Exam_Score
+﻿Hours_Studied,Attendance,Parental_Involvement,Access_to_Resources,Extracurricular_Activities,Sleep_Hours,Previous_Scores,Motivation_Level,Internet_Access,Tutoring_Sessions,Family_Income,Teacher_Quality,School_Type,Peer_Influence,Physical_Activity,Learning_Disabilities,Parental_Education_Level,Distance_from_Home,Gender,Exam_Score
 23,84,Low,High,No,7,73,Low,Yes,0,Low,Medium,Public,Positive,3,No,High School,Near,Male,67
 19,64,Low,Medium,No,8,59,Low,Yes,2,Medium,Medium,Public,Negative,4,No,College,Moderate,Female,61
 24,98,Medium,Medium,Yes,7,91,Medium,Yes,2,Medium,Medium,Public,Neutral,4,No,Postgraduate,Near,Male,74
@@ -148,7 +148,7 @@ Hours_Studied,Attendance,Parental_Involvement,Access_to_Resources,Extracurricula
 13,65,Low,High,No,6,99,Medium,Yes,0,Low,Medium,Private,Negative,4,No,High School,Near,Male,61
 12,96,Low,High,Yes,8,62,Medium,Yes,2,Medium,High,Public,Negative,3,No,College,Near,Female,68
 23,79,High,High,Yes,8,82,Low,Yes,3,Medium,Medium,Public,Negative,3,Yes,Postgraduate,Moderate,Female,69
-22,95,Medium,High,Yes,6,69,Medium,Yes,1,Low,Medium,Public,Positive,3,No,College,Near,Female,72
+22,95,Medium,High,Yes,6,69,Medium,Yes,2,Low,Medium,Public,Positive,3,No,College,Near,Female,72
 22,83,Medium,High,Yes,5,82,Medium,Yes,2,Low,High,Public,Positive,3,No,Postgraduate,Near,Female,71
 22,87,High,High,No,5,80,Low,Yes,2,Low,High,Public,Negative,3,No,High School,Near,Female,70
 16,92,Medium,High,Yes,5,85,Low,Yes,1,Low,Medium,Public,Neutral,2,No,High School,Moderate,Male,68

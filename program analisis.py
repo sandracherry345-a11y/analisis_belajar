@@ -28,6 +28,7 @@ KOLOM_ANGKA = [
 # aspek yang boleh diubah siswa (urutan NAMA_ASPEK sama dengan KOLOM_ASPEK)
 NAMA_ASPEK = ["Jam belajar", "Kehadiran", "Nilai sebelumnya", "Durasi tidur",
               "Sesi bimbingan", "Motivasi", "Aktivitas fisik", "Nilai ujian"]
+
 KOLOM_ASPEK = ["Hours_Studied", "Attendance", "Previous_Scores", "Sleep_Hours",
                "Tutoring_Sessions", "Motivation_Level", "Physical_Activity", "Exam_Score"]
 
