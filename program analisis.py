@@ -14,7 +14,6 @@ KOLOM_WAJIB = [
     "Exam_Score"
 ]
 
-# kolom yang harus berisi bilangan bulat
 KOLOM_ANGKA = [
     "Hours_Studied",
     "Attendance",
@@ -25,7 +24,6 @@ KOLOM_ANGKA = [
     "Exam_Score"
 ]
 
-# aspek yang boleh diubah siswa (urutan NAMA_ASPEK sama dengan KOLOM_ASPEK)
 NAMA_ASPEK = ["Jam belajar", "Kehadiran", "Nilai sebelumnya", "Durasi tidur",
               "Sesi bimbingan", "Motivasi", "Aktivitas fisik", "Nilai ujian"]
 
@@ -33,9 +31,7 @@ KOLOM_ASPEK = ["Hours_Studied", "Attendance", "Previous_Scores", "Sleep_Hours",
                "Tutoring_Sessions", "Motivation_Level", "Physical_Activity", "Exam_Score"]
 
 
-# --- DATASET ---
 def baca_data():
-    """Fungsi membaca dataset CSV dan memvalidasi setiap baris."""
     data = []
 
     if not os.path.exists(FILE_CSV):
@@ -84,7 +80,6 @@ def baca_data():
 
 
 def validasi_nilai_baru(kolom, nilai):
-    """Fungsi memvalidasi nilai baru sebelum disimpan. Mengembalikan True jika valid."""
     if kolom == "Motivation_Level":
         if nilai != "Low" and nilai != "Medium" and nilai != "High":
             print("[ERROR] Motivasi harus Low, Medium, atau High!")
@@ -113,20 +108,14 @@ def validasi_nilai_baru(kolom, nilai):
 
 
 def simpan_ke_csv(nomor_baris, kolom, nilai_baru):
-    """Fungsi mengubah satu nilai di file CSV tanpa menghapus data lainnya."""
     try:
-        # baca SEMUA baris di file CSV
         semua_baris = []
         with open(FILE_CSV, "r", newline="", encoding="utf-8-sig") as file:
             reader = csv.DictReader(file)
             nama_kolom = reader.fieldnames
             for row in reader:
                 semua_baris.append(row)
-
-        # ubah satu nilai saja (baris pertama data ada di baris ke-2 file CSV)
         semua_baris[nomor_baris - 2][kolom] = nilai_baru
-
-        # tulis ulang semua baris ke file CSV
         with open(FILE_CSV, "w", newline="", encoding="utf-8-sig") as file:
             writer = csv.DictWriter(file, fieldnames=nama_kolom)
             writer.writeheader()
@@ -139,9 +128,7 @@ def simpan_ke_csv(nomor_baris, kolom, nilai_baru):
 
     return True
 
-# --- ANALISIS ---
 def kategori_nilai(nilai):
-    """Fungsi menentukan kategori hasil ujian."""
     if nilai >= 85:
         return "Tinggi"
     elif nilai >= 70:
@@ -151,7 +138,6 @@ def kategori_nilai(nilai):
 
 
 def rata_rata(data, kolom):
-    """Fungsi menghitung rata-rata satu kolom."""
     total = 0
     for row in data:
         total += row[kolom]
@@ -159,7 +145,6 @@ def rata_rata(data, kolom):
 
 
 def ringkasan_data(data):
-    """Fungsi menampilkan ringkasan data seluruh siswa."""
     print("\n=== RINGKASAN DATA SISWA ===")
     print("=" * 40)
     print(f"{'Keterangan':<24} | {'Hasil':<11}")
@@ -173,7 +158,6 @@ def ringkasan_data(data):
 
 
 def cetak_kelompok(nama, daftar_nilai):
-    """Fungsi mencetak satu baris tabel kelompok durasi belajar."""
     if len(daftar_nilai) > 0:
         rata = round(sum(daftar_nilai) / len(daftar_nilai), 2)
     else:
@@ -182,7 +166,6 @@ def cetak_kelompok(nama, daftar_nilai):
 
 
 def analisis_belajar(data):
-    """Fungsi menganalisis nilai berdasarkan durasi belajar."""
     rendah = []
     sedang = []
     tinggi = []
@@ -206,7 +189,6 @@ def analisis_belajar(data):
 
 
 def kelompok_nilai(data):
-    """Fungsi mengelompokkan siswa berdasarkan kategori hasil ujian."""
     tinggi = 0
     sedang = 0
     rendah = 0
@@ -228,9 +210,7 @@ def kelompok_nilai(data):
     print(f"{'Perlu perhatian (< 70)':<24} | {rendah:>12}")
     print("=" * 40)
 
-# --- FITUR UTAMA ---
 def cetak_daftar(judul, daftar, kosong):
-    """Fungsi mencetak daftar poin, atau teks pengganti jika daftar kosong."""
     print(f"\n=== {judul} ===")
     if len(daftar) == 0:
         print("- " + kosong)
@@ -239,7 +219,6 @@ def cetak_daftar(judul, daftar, kosong):
 
 
 def tampilkan_rekap_siswa(nomor, siswa):
-    """Fungsi memformat dan menampilkan rekap evaluasi satu siswa ke terminal."""
     selisih = siswa["Exam_Score"] - siswa["Previous_Scores"]
 
     print(f"\n=== REKAP EVALUASI SISWA NO. {nomor} ===")
@@ -267,7 +246,6 @@ def tampilkan_rekap_siswa(nomor, siswa):
 
 
 def rekomendasi_siswa(siswa):
-    """Fungsi menampilkan kebiasaan baik dan rekomendasi untuk siswa."""
     jam = siswa["Hours_Studied"]
     hadir = siswa["Attendance"]
     tidur = siswa["Sleep_Hours"]
@@ -280,7 +258,6 @@ def rekomendasi_siswa(siswa):
     baik = []
     saran = []
 
-    # kebiasaan yang sudah baik
     if hadir >= 80:
         baik.append("Kehadiranmu sudah baik, pertahankan agar tidak tertinggal materi.")
     if tidur >= 7:
@@ -293,8 +270,6 @@ def rekomendasi_siswa(siswa):
         baik.append("Kamu masih menyempatkan aktivitas fisik, ini baik untuk menjaga kebugaran.")
     if nilai > sebelumnya:
         baik.append("Nilai ujianmu naik dibanding nilai sebelumnya, tandanya usahamu mulai membuahkan hasil.")
-
-    # hal yang perlu diperbaiki
     if jam < 3:
         saran.append("Jam belajarmu masih sedikit. Coba buat jadwal belajar harian yang tetap, walaupun dimulai dari waktu singkat.")
     if hadir < 80:
@@ -319,12 +294,10 @@ def rekomendasi_siswa(siswa):
 
 
 def evaluasi_guru(data):
-    """Fungsi menampilkan evaluasi akademik dan rekomendasi untuk guru."""
     jumlah = len(data)
     nilai = rata_rata(data, "Exam_Score")
     hadir = rata_rata(data, "Attendance")
 
-    # menghitung siswa pada tiap kondisi
     nomor_rendah = []
     hadir_rendah = 0
     tidur_kurang = 0
@@ -352,7 +325,6 @@ def evaluasi_guru(data):
     jumlah_rendah = len(nomor_rendah)
     persentase = jumlah_rendah / jumlah * 100
 
-    # tabel siswa yang perlu diperhatikan
     print("\n=== SISWA YANG PERLU DIPERHATIKAN ===")
     print("=" * 54)
     print(f"{'Kondisi':<30} | {'Jumlah':>6} | {'Persen':>8}")
@@ -384,7 +356,6 @@ def evaluasi_guru(data):
         print(f"{nomor_min:<10} | {nilai_min:>11}")
     print("=" * 26)
 
-    # kategori rata-rata nilai, ditulis dengan huruf kecil
     kategori = kategori_nilai(nilai)
     if kategori == "Tinggi":
         kata_kategori = "tinggi"
@@ -396,7 +367,6 @@ def evaluasi_guru(data):
     print("\n=== KESIMPULAN ===")
     print(f"Rata-rata nilai ujian siswa adalah {nilai:.2f} (kategori {kata_kategori}), dengan {jumlah_rendah} dari {jumlah} siswa ({persentase:.2f}%) memperoleh nilai di bawah 70.")
 
-    # rekomendasi untuk guru
     rekomendasi = []
 
     if nilai < 70:
@@ -469,7 +439,6 @@ def ubah_data_siswa(data):
         print("[GAGAL] Proses dihentikan karena data input tidak valid.")
         return
 
-    # semua kolom selain motivasi berisi angka
     if kolom != "Motivation_Level":
         nilai_baru = int(nilai_baru)
 
@@ -482,16 +451,13 @@ def ubah_data_siswa(data):
         print("[GAGAL] Data tidak diubah.")
         return
 
-    # perbarui data di program agar analisis langsung memakai nilai baru
     siswa[kolom] = nilai_baru
     siswa["Kategori"] = kategori_nilai(siswa["Exam_Score"])
 
     print("[BERHASIL] Data berhasil diubah dan disimpan ke file CSV.")
 
 
-# --- MENU ---
 def evaluasi_siswa(data):
-    """Fungsi menampilkan hasil evaluasi untuk satu siswa."""
     print("\n======== LIHAT HASIL EVALUASI ========")
     print("Jumlah data siswa tersedia:", len(data))
 
@@ -510,7 +476,6 @@ def evaluasi_siswa(data):
 
 
 def menu_siswa(data):
-    """Fungsi menampilkan menu untuk siswa."""
     while True:
         print("\n======== MENU SISWA ========")
         print("1. Lihat Hasil Evaluasi")
@@ -530,7 +495,6 @@ def menu_siswa(data):
 
 
 def menu_guru(data):
-    """Fungsi menampilkan untuk menu guru."""
     while True:
         print("\n ======= MENU GURU ========")
         print("1. Ringkasan Data Siswa")
