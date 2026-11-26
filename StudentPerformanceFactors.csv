@@ -17,7 +17,7 @@ abc,89,Low,Medium,Yes,8,98,Medium,Yes,1,Medium,Medium,Public,Negative,4,No,High 
 17,68,Medium,Medium,No,8,70,Medium,Yes,2,Medium,Medium,Private,Positive,4,No,High School,Near,Female,64
 14,60,Medium,Low,Yes,10,65,Low,Yes,0,High,Medium,Private,Positive,3,No,College,Near,Male,60
 22,70,Low,Medium,Yes,6,82,Medium,Yes,1,Low,High,Public,Neutral,3,No,High School,Near,Female,65
-
+15,80,Medium,Medium,Yes,9,91,Low,Yes,3,Low,    ,Public,Positive,2,No,College,Moderate,Female,67
 12,75,Medium,High,Yes,7,58,Medium,Yes,3,Medium,Medium,Private,Positive,4,No,College,Near,Male,66
 29,78,Medium,Medium,No,5,99,High,Yes,0,High,Medium,Public,Negative,1,No,High School,Moderate,Female,69
 19,99,Medium,High,No,6,84,Medium,Yes,1,Medium,High,Public,Neutral,3,No,High School,Near,Male,72
