@@ -1,24 +1,5 @@
 # Program Analisis Hubungan Kebiasaan Belajar dengan Hasil Akademik
 
-## Deskripsi
-Program ini dibuat dengan bahasa Python untuk menganalisis hubungan antara kebiasaan belajar dan hasil akademik siswa SMA. Program membaca data siswa dari file CSV, memeriksa apakah datanya valid, lalu mengolahnya menjadi ringkasan, pengelompokan, evaluasi, dan rekomendasi.
-
-Program memiliki dua jenis pengguna:
-- Siswa, untuk melihat rekap dan saran perbaikan kebiasaan belajarnya sendiri, serta memperbarui data kebiasaannya jika sudah berubah.
-- Guru, untuk memantau kondisi seluruh siswa dan mendapat rekomendasi pembelajaran.
-
-## Latar Belakang
-Banyak siswa bingung bagaimana mengubah kebiasaan belajar dan apa yang harus dilakukan agar nilai akademiknya lebih baik. Di sisi lain, guru kesulitan memantau kebiasaan belajar siswa satu per satu. Program ini dibuat untuk membantu keduanya dengan melihat data kebiasaan belajar dan hasil ujian secara terstruktur.
-
-Kebiasaan siswa juga bisa berubah setelah siswa memperbaikinya, misalnya jadwal tidur yang sebelumnya buruk menjadi lebih baik. Karena itu program menyediakan fitur untuk mengubah data siswa, dan perubahan tersebut langsung tersimpan di file CSV tanpa perlu membuka file secara manual.
-
-## Tujuan
-1. Mengetahui gambaran umum kebiasaan belajar dan nilai ujian siswa.
-2. Melihat perbedaan nilai ujian pada siswa dengan durasi belajar yang berbeda.
-3. Mengelompokkan siswa berdasarkan hasil ujian.
-4. Memberikan rekomendasi yang sesuai untuk siswa maupun guru.
-5. Memungkinkan siswa memperbarui data kebiasaannya, sehingga analisis berikutnya memakai data yang terbaru.
-
 ## Fitur
 
 ### Menu Siswa
@@ -64,10 +45,6 @@ Kolom yang digunakan:
 - `Physical_Activity`: aktivitas fisik
 - `Exam_Score`: nilai ujian
 
-Catatan:
-- Nomor data siswa adalah urutan data yang valid, bukan nomor baris di file CSV. Jika ada baris yang rusak dan dilewati, nomor data tetap berurutan.
-- Fitur Ubah Data Kebiasaan mengubah isi file `StudentPerformanceFactors.csv` secara permanen. Simpan salinan file aslinya terlebih dahulu sebagai cadangan.
-
 ## Aturan Pengolahan Data
 
 ### Validasi data
@@ -99,17 +76,6 @@ Jika siswa mengubah nilai ujian, kategorinya dihitung ulang.
 - 3 sampai 5 jam: Sedang
 - Lebih dari 5 jam: Tinggi
 
-### Dasar rekomendasi
-Rekomendasi muncul berdasarkan kondisi berikut:
-- kehadiran minimal 80%,
-- tidur minimal 7 jam,
-- motivasi belajar (high atau low),
-- mengikuti sesi bimbingan atau belum,
-- ada aktivitas fisik atau belum,
-- nilai ujian naik atau turun dibanding nilai sebelumnya,
-- jam belajar kurang dari 3 jam,
-- nilai ujian di bawah 70.
-
 ## Cara Kerja Program
 1. Program membaca dan memvalidasi data dari file CSV (`baca_data`). Setiap data juga mencatat baris aslinya di file CSV.
 2. Setiap siswa diberi kategori nilai (`kategori_nilai`).
@@ -131,29 +97,7 @@ Rekomendasi muncul berdasarkan kondisi berikut:
    - `2` untuk masuk sebagai guru.
    - `3` untuk keluar dari program.
 
-### Contoh mengubah data
-Misalnya siswa nomor 40 ingin memperbarui durasi tidurnya menjadi 7 jam:
-
-1. Pilih `1` (Masuk Sebagai Siswa), lalu `2` (Ubah Data Kebiasaan).
-2. Masukkan nomor data `40`.
-3. Pilih aspek `4` (Durasi tidur).
-4. Masukkan nilai baru `7`.
-5. Jawab `y` untuk menyimpan. Program menampilkan `[BERHASIL] Data berhasil diubah dan disimpan ke file CSV.`
-6. Pilih `1` (Lihat Hasil Evaluasi) lalu nomor `40`. Durasi tidur sudah tampil 7 jam, dan kolom `Sleep_Hours` di file CSV juga sudah berubah.
-
-## Batasan
-- Program hanya membaca maksimal 300 data valid pertama dari file CSV.
-- Program belum memiliki sistem login, sehingga siswa dapat mengubah data siapa pun dengan memasukkan nomor datanya.
-- Setiap perubahan langsung mengubah file CSV dan tidak dapat dibatalkan dari dalam program setelah disimpan.
-- Satu kali perubahan hanya untuk satu aspek pada satu siswa.
-
 ## Struktur File
 - `program analisis.py`: kode program utama
 - `StudentPerformanceFactors.csv`: dataset siswa
 - `README.md`: dokumentasi proyek
-
-## Anggota Kelompok
-1. Cherry Sandra: fitur utama
-2. Liyana Maziya Fadhlani: fitur analisis
-3. Belva Fitriyah Arzeti Putri: fitur menu
-4. Asy Syifa Ramadhani Putri Indrianto: fitur dataset
